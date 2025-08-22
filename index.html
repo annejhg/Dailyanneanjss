@@ -15,54 +15,116 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow-x: hidden;
+    }
+
+    /* Fundo estrelado */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png');
+      opacity: 0.25;
+      animation: stars 40s linear infinite;
+      z-index: 0;
+    }
+    @keyframes stars {
+      from { background-position: 0 0; }
+      to { background-position: 2000px 2000px; }
     }
 
     .container {
-      background-color: #1b0029;
+      background: rgba(27, 0, 41, 0.9);
       padding: 2rem;
-      border-radius: 15px;
-      max-width: 800px;
-      box-shadow: 0 0 25px #ff00ff88;
+      border-radius: 20px;
+      max-width: 850px;
+      width: 90%;
+      box-shadow: 0 0 40px #ff00ff88;
       border: 2px solid #b300b3;
+      backdrop-filter: blur(10px);
+      z-index: 1;
+      position: relative;
+      animation: fadeIn 1.5s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(50px); }
     }
 
     h1 {
       text-align: center;
       font-size: 3rem;
-      margin-bottom: 1rem;
-      color: #ffccff;
-      text-shadow: 2px 2px #660066;
-    }
-
-    .entry {
-      background-color: #2b003b;
-      padding: 1rem;
-      border-radius: 10px;
       margin-bottom: 1.5rem;
-      border-left: 5px solid #cc00cc;
+      color: #ffccff;
+      text-shadow: 0 0 15px #ff33cc, 0 0 30px #660066;
+      animation: pulse 2.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 10px #ff33cc, 0 0 20px #660066; }
+      50% { text-shadow: 0 0 25px #ff66ff, 0 0 50px #990099; }
     }
 
-    .entry h2 {
+    /* Card com flip */
+    .entry {
+      perspective: 1000px;
+      margin-bottom: 2rem;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+    }
+
+    .entry.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      backface-visibility: hidden;
+      padding: 1.2rem;
+      border-radius: 12px;
+      box-shadow: inset 0 0 10px #550055;
+      border-left: 6px solid #cc00cc;
+    }
+
+    .card-front {
+      background: linear-gradient(145deg, #2b003b, #1b0029);
+    }
+
+    .card-back {
+      background: linear-gradient(145deg, #3c0055, #25003a);
+      transform: rotateY(180deg);
+      text-align: center;
+      font-style: italic;
+      color: #ffb3ff;
+    }
+
+    .card-front h2 {
       color: #ff99ff;
       margin-bottom: 0.5rem;
       font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 5px #ff33cc;
     }
 
-    .entry p {
-      margin: 0.3rem 0;
+    .card-front p {
+      margin: 0.4rem 0;
+      line-height: 1.6;
     }
 
     footer {
       text-align: center;
       font-size: 0.9rem;
       margin-top: 1rem;
-      color: #aa88aa;
-    }
-
-    /* Hover glow */
-    .entry:hover {
-      box-shadow: 0 0 15px #ff66ff;
-      transition: 0.3s;
+      color: #cc99cc;
+      opacity: 0.8;
     }
   </style>
 </head>
@@ -71,22 +133,52 @@
     <h1>✨ Daily da Clawdeen ✨</h1>
 
     <div class="entry">
-      <h2>📅 22/08/2025</h2>
-      <p><strong>✅ O que fiz:</strong> Brilhei no código da tela de login</p>
-      <p><strong>📌 O que vou fazer:</strong> Dominar a dashboard com estilo</p>
-      <p><strong>⚠️ Impedimentos:</strong> Backend ainda não serviu o glamour</p>
+      <div class="card-inner">
+        <div class="card-front">
+          <h2>📅 22/08/2025</h2>
+          <p><strong>✅ O que fiz:</strong> Brilhei no código da tela de login</p>
+          <p><strong>📌 O que vou fazer:</strong> Dominar a dashboard com estilo</p>
+          <p><strong>⚠️ Impedimentos:</strong> Backend ainda não serviu o glamour</p>
+        </div>
+        <div class="card-back">
+          💫 Clawdeen tip: "Se o backend não brilha, você brilha em dobro!"
+        </div>
+      </div>
     </div>
 
     <div class="entry">
-      <h2>📅 21/08/2025</h2>
-      <p><strong>✅ O que fiz:</strong> Planejei o site com vibe fashion</p>
-      <p><strong>📌 O que vou fazer:</strong> Criar o layout Clawdeen</p>
-      <p><strong>⚠️ Impedimentos:</strong> Falta de glitter no sistema</p>
+      <div class="card-inner">
+        <div class="card-front">
+          <h2>📅 21/08/2025</h2>
+          <p><strong>✅ O que fiz:</strong> Planejei o site com vibe fashion</p>
+          <p><strong>📌 O que vou fazer:</strong> Criar o layout Clawdeen</p>
+          <p><strong>⚠️ Impedimentos:</strong> Falta de glitter no sistema</p>
+        </div>
+        <div class="card-back">
+          ✨ Clawdeen mood: "Glitter nunca é demais!"
+        </div>
+      </div>
     </div>
 
     <footer>
-      Feito com garra por você 💜 | Atualizado com estilo
+      Feito com garra por você 💜 | Sempre atualizado com brilho
     </footer>
   </div>
+
+  <!-- Som de sparkle -->
+  <audio id="sparkleSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1d8f0c1821.mp3?filename=sparkle-1-117038.mp3" preload="auto"></audio>
+
+  <script>
+    const cards = document.querySelectorAll('.entry');
+    const sparkle = document.getElementById('sparkleSound');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('flipped');
+        sparkle.currentTime = 0; 
+        sparkle.play();
+      });
+    });
+  </script>
 </body>
 </html>
