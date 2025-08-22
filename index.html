@@ -29,7 +29,7 @@
       100% { transform: translateY(110vh) translateX(30px); }
     }
     @keyframes twinkle {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
+      0%,100% { opacity: 0.3; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.4); }
     }
     .container {
@@ -61,9 +61,7 @@
     .question:hover {
       box-shadow: 0 0 20px #ff99ff, 0 0 40px #ff33ff;
       transform: scale(1.02) translateY(-3px);
-      animation: pulse 1s infinite;
     }
-    @keyframes pulse { 0%,100%{transform:scale(1.02);}50%{transform:scale(1.05);} }
     .question h2 {
       color: #ffb3ff;
       margin-bottom: 0.5rem;
@@ -104,7 +102,6 @@
       box-shadow:0 0 20px #ff99ff;
       transform:scale(1.05);
     }
-    button:active { transform:scale(0.95); box-shadow:0 0 25px #ff99ff inset; }
     .result {
       text-align: center;
       font-size: 1.3rem;
@@ -127,10 +124,7 @@
       text-shadow: 1px 1px #660066;
     }
     .ranking ol { padding-left:20px; }
-    .ranking li { margin:0.6rem 0; font-size:1.2rem; transition:0.3s; }
-    .ranking li:nth-child(1){ color:#ffd700; text-shadow:0 0 10px #ffd700; }
-    .ranking li:nth-child(2){ color:#c0c0c0; text-shadow:0 0 10px #c0c0c0; }
-    .ranking li:nth-child(3){ color:#cd7f32; text-shadow:0 0 10px #cd7f32; }
+    .ranking li { margin:0.6rem 0; font-size:1.2rem; }
     .high-score{ color:#ffff66!important; font-weight:bold; text-shadow:0 0 8px #ffff66,0 0 15px #ffcc00; }
   </style>
 </head>
@@ -211,84 +205,36 @@
   </div>
 
   <script>
-    let ranking = JSON.parse(localStorage.getItem('ranking')) || [];
+document.addEventListener("DOMContentLoaded", function(){
+  let ranking = JSON.parse(localStorage.getItem('ranking')) || [];
 
-    const bgMusic = document.getElementById('bgMusic');
-    const hoverSound = new Audio('https://www.fesliyanstudios.com/play-mp3/4385'); // hover
-    const clickSound = new Audio('https://www.fesliyanstudios.com/play-mp3/540');   // marcar resposta
-    const winSound = new Audio('https://www.fesliyanstudios.com/play-mp3/387');     // vitória
-    const mehSound = new Audio('https://www.fesliyanstudios.com/play-mp3/380');     // média
-    const failSound = new Audio('https://www.fesliyanstudios.com/play-mp3/399');    // baixa
+  // Sons confiáveis
+  const clickSound = new Audio('https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg');
+  const winSound = new Audio('https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg');
+  const mehSound = new Audio('https://actions.google.com/sounds/v1/cartoon/slide_whistle_to_drum_hit.ogg');
+  const failSound = new Audio('https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg');
 
-    function createGlitter(){
-      for(let i=0;i<50;i++){
-        const glitter = document.createElement('div');
-        glitter.classList.add('glitter');
-        glitter.style.left = Math.random()*100+'vw';
-        glitter.style.animationDuration = (2+Math.random()*3)+'s';
-        glitter.style.width = glitter.style.height = (2+Math.random()*4)+'px';
-        document.body.appendChild(glitter);
-      }
+  // Hover e clique nas respostas
+  document.querySelectorAll('label').forEach(label => {
+    label.addEventListener('click', () => { clickSound.currentTime = 0; clickSound.play(); });
+  });
+
+  // Botão música de fundo
+  const bgMusic = document.getElementById('bgMusic');
+  document.getElementById('playMusic').addEventListener('click', ()=>{ bgMusic.play(); });
+
+  // Função checar respostas
+  window.checkAnswers = function(){
+    const form = document.getElementById("quizForm");
+    let score = 0;
+    const total = 11;
+    for(let i=1;i<=total;i++){
+      let val = form["q"+i].value;
+      score += parseInt(val || 0);
     }
-
-    function updateRanking(){
-      ranking.sort((a,b)=>b.score-a.score);
-      const rankingList=document.getElementById("rankingList");
-      rankingList.innerHTML="";
-      ranking.forEach((item,index)=>{
-        const li=document.createElement("li");
-        li.textContent=`${item.name} - ${item.score}/11`;
-        if(item.score>=9) li.classList.add('high-score');
-        rankingList.appendChild(li);
-      });
-      localStorage.setItem('ranking',JSON.stringify(ranking));
-    }
-
-    document.querySelectorAll('label').forEach(label=>{
-      label.addEventListener('mouseenter',()=>{
-        hoverSound.currentTime=0;
-        hoverSound.play();
-      });
-      label.addEventListener('click',()=>{
-        clickSound.currentTime=0;
-        clickSound.play();
-      });
-    });
-
-    document.getElementById('playMusic').addEventListener('click',()=>{
-      bgMusic.play();
-    });
-
-    function checkAnswers(){
-      const form=document.getElementById("quizForm");
-      let score=0;
-      const total=11;
-      for(let i=1;i<=total;i++){
-        let val=form["q"+i].value;
-        score+=parseInt(val);
-      }
-      let percentage=(score/total)*100;
-      let message="";
-      let soundToPlay;
-      if(percentage>=80){
-        message="💖 Nota alta! Você pode continuar no meu daily ✨";
-        soundToPlay=winSound;
-      } else if(percentage>=50){
-        message="😏 Passou raspando! Bora viver mais comigo?";
-        soundToPlay=mehSound;
-      } else{
-        message="❌ Nota baixa! Você nem deveria estar aqui...";
-        soundToPlay=failSound;
-      }
-      document.getElementById("result").innerHTML=`Sua pontuação: ${score}/${total}<br>${message}`;
-      soundToPlay.currentTime=0;
-      soundToPlay.play();
-      const name=prompt("Digite seu nome para entrar no ranking glam:");
-      if(name){ ranking.push({name,score}); updateRanking(); }
-    }
-
-    createGlitter();
-    updateRanking();
-  </script>
-</body>
-</html>
+    let percentage = (score/total)*100;
+    let message="";
+    let soundToPlay;
+    if(percentage>=80){ message="💖 Nota alta! Você pode continuar no meu daily ✨"; soundToPlay = winSound; }
+    else if(percentage>=50){ message="😏 Passou raspando! Bora viver mais comigo?"; soundToPlay = mehSound; }
+    else{ message="❌ Nota baixa! Você nem deveria estar aqui
