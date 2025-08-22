@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Daily da Clawdeen</title>
+  <title>Quiz da Anneh ✨</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
@@ -15,170 +15,198 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow-x: hidden;
-    }
-
-    /* Fundo estrelado */
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: url('https://www.transparenttextures.com/patterns/stardust.png');
-      opacity: 0.25;
-      animation: stars 40s linear infinite;
-      z-index: 0;
-    }
-    @keyframes stars {
-      from { background-position: 0 0; }
-      to { background-position: 2000px 2000px; }
     }
 
     .container {
-      background: rgba(27, 0, 41, 0.9);
+      background-color: #1b0029;
       padding: 2rem;
-      border-radius: 20px;
-      max-width: 850px;
-      width: 90%;
-      box-shadow: 0 0 40px #ff00ff88;
+      border-radius: 15px;
+      max-width: 800px;
+      box-shadow: 0 0 25px #ff00ff88;
       border: 2px solid #b300b3;
-      backdrop-filter: blur(10px);
-      z-index: 1;
-      position: relative;
-      animation: fadeIn 1.5s ease forwards;
-      opacity: 0;
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; transform: translateY(0); }
-      from { opacity: 0; transform: translateY(50px); }
     }
 
     h1 {
       text-align: center;
       font-size: 3rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       color: #ffccff;
-      text-shadow: 0 0 15px #ff33cc, 0 0 30px #660066;
-      animation: pulse 2.5s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { text-shadow: 0 0 10px #ff33cc, 0 0 20px #660066; }
-      50% { text-shadow: 0 0 25px #ff66ff, 0 0 50px #990099; }
+      text-shadow: 2px 2px #660066;
     }
 
-    /* Card com flip */
-    .entry {
-      perspective: 1000px;
-      margin-bottom: 2rem;
-      cursor: pointer;
+    .question {
+      background-color: #2b003b;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      border-left: 5px solid #cc00cc;
     }
 
-    .card-inner {
-      position: relative;
-      width: 100%;
-      transform-style: preserve-3d;
-      transition: transform 0.8s;
-    }
-
-    .entry.flipped .card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .card-front, .card-back {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      backface-visibility: hidden;
-      padding: 1.2rem;
-      border-radius: 12px;
-      box-shadow: inset 0 0 10px #550055;
-      border-left: 6px solid #cc00cc;
-    }
-
-    .card-front {
-      background: linear-gradient(145deg, #2b003b, #1b0029);
-    }
-
-    .card-back {
-      background: linear-gradient(145deg, #3c0055, #25003a);
-      transform: rotateY(180deg);
-      text-align: center;
-      font-style: italic;
-      color: #ffb3ff;
-    }
-
-    .card-front h2 {
+    .question h2 {
       color: #ff99ff;
       margin-bottom: 0.5rem;
       font-family: 'Orbitron', sans-serif;
-      text-shadow: 0 0 5px #ff33cc;
     }
 
-    .card-front p {
-      margin: 0.4rem 0;
-      line-height: 1.6;
+    label {
+      display: block;
+      margin: 0.3rem 0;
+      cursor: pointer;
     }
 
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
+    button {
+      background: #cc00cc;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
       margin-top: 1rem;
-      color: #cc99cc;
-      opacity: 0.8;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    button:hover {
+      background: #ff33ff;
+      box-shadow: 0 0 10px #ff66ff;
+    }
+
+    .result {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: #ffccff;
+    }
+
+    .ranking {
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: #2b003b;
+      border-radius: 10px;
+    }
+
+    .ranking h2 {
+      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+      color: #ffccff;
+      margin-bottom: 1rem;
+    }
+
+    .ranking ol {
+      padding-left: 20px;
+    }
+
+    .ranking li {
+      margin: 0.5rem 0;
+      font-size: 1.1rem;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>✨ Daily da Clawdeen ✨</h1>
-
-    <div class="entry">
-      <div class="card-inner">
-        <div class="card-front">
-          <h2>📅 22/08/2025</h2>
-          <p><strong>✅ O que fiz:</strong> Brilhei no código da tela de login</p>
-          <p><strong>📌 O que vou fazer:</strong> Dominar a dashboard com estilo</p>
-          <p><strong>⚠️ Impedimentos:</strong> Backend ainda não serviu o glamour</p>
-        </div>
-        <div class="card-back">
-          💫 Clawdeen tip: "Se o backend não brilha, você brilha em dobro!"
-        </div>
+    <h1>💜 Quiz da Anneh 💜</h1>
+    
+    <form id="quizForm">
+      <div class="question">
+        <h2>1. Qual é a cor favorita da Anneh?</h2>
+        <label><input type="radio" name="q1" value="0"> Azul</label>
+        <label><input type="radio" name="q1" value="1"> Roxo</label>
+        <label><input type="radio" name="q1" value="0"> Verde</label>
       </div>
-    </div>
 
-    <div class="entry">
-      <div class="card-inner">
-        <div class="card-front">
-          <h2>📅 21/08/2025</h2>
-          <p><strong>✅ O que fiz:</strong> Planejei o site com vibe fashion</p>
-          <p><strong>📌 O que vou fazer:</strong> Criar o layout Clawdeen</p>
-          <p><strong>⚠️ Impedimentos:</strong> Falta de glitter no sistema</p>
-        </div>
-        <div class="card-back">
-          ✨ Clawdeen mood: "Glitter nunca é demais!"
-        </div>
+      <div class="question">
+        <h2>2. A Anneh ainda está na escola?</h2>
+        <label><input type="radio" name="q2" value="0"> Sim</label>
+        <label><input type="radio" name="q2" value="1"> Ela já se formou</label>
+        <label><input type="radio" name="q2" value="0"> Não sei</label>
       </div>
-    </div>
 
-    <footer>
-      Feito com garra por você 💜 | Sempre atualizado com brilho
-    </footer>
+      <div class="question">
+        <h2>3. Qual série a Anneh gosta mais?</h2>
+        <label><input type="radio" name="q3" value="1"> Grey's Anatomy</label>
+        <label><input type="radio" name="q3" value="0"> Supernatural</label>
+        <label><input type="radio" name="q3" value="0"> Diários de um Vampiro</label>
+      </div>
+
+      <div class="question">
+        <h2>4. Qual é a data de aniversário da Anneh?</h2>
+        <label><input type="radio" name="q4" value="0"> 30 de fevereiro</label>
+        <label><input type="radio" name="q4" value="0"> 12 de 13</label>
+        <label><input type="radio" name="q4" value="1"> A verdadeira 😏</label>
+      </div>
+
+      <div class="question">
+        <h2>5. Qual o sobrenome da Anneh?</h2>
+        <label><input type="radio" name="q5" value="1"> Ricardo</label>
+        <label><input type="radio" name="q5" value="0"> Salvatore</label>
+        <label><input type="radio" name="q5" value="0"> Mikaelson</label>
+      </div>
+
+      <div class="question">
+        <h2>6. Como se escreve o nome da Anneh?</h2>
+        <label><input type="radio" name="q6" value="0"> Anne</label>
+        <label><input type="radio" name="q6" value="0"> Anny</label>
+        <label><input type="radio" name="q6" value="1"> Anneh</label>
+      </div>
+
+      <button type="button" onclick="checkAnswers()">Enviar Respostas</button>
+    </form>
+
+    <div id="result" class="result"></div>
+
+    <div class="ranking">
+      <h2>🏆 Ranking dos Amigos</h2>
+      <ol id="rankingList"></ol>
+    </div>
   </div>
 
-  <!-- Som de sparkle -->
-  <audio id="sparkleSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1d8f0c1821.mp3?filename=sparkle-1-117038.mp3" preload="auto"></audio>
-
   <script>
-    const cards = document.querySelectorAll('.entry');
-    const sparkle = document.getElementById('sparkleSound');
+    let ranking = JSON.parse(localStorage.getItem('ranking')) || [];
 
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        card.classList.toggle('flipped');
-        sparkle.currentTime = 0; 
-        sparkle.play();
+    function updateRanking() {
+      ranking.sort((a, b) => b.score - a.score);
+      const rankingList = document.getElementById("rankingList");
+      rankingList.innerHTML = "";
+      ranking.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name} - ${item.score}/6`;
+        rankingList.appendChild(li);
       });
-    });
+      localStorage.setItem('ranking', JSON.stringify(ranking));
+    }
+
+    function checkAnswers() {
+      const form = document.getElementById("quizForm");
+      let score = 0;
+      const total = 6;
+
+      for (let i = 1; i <= total; i++) {
+        let val = form["q" + i].value;
+        score += parseInt(val);
+      }
+
+      let percentage = (score / total) * 100;
+      let message = "";
+
+      if (percentage >= 80) {
+        message = "💜 Nota alta! Você pode continuar no meu daily ✨";
+      } else if (percentage >= 50) {
+        message = "😏 Passou raspando! Bora viver mais comigo?";
+      } else {
+        message = "❌ Nota baixa! Você nem deveria estar aqui...";
+      }
+
+      document.getElementById("result").innerHTML = `Sua pontuação: ${score}/${total}<br>${message}`;
+
+      // Perguntar nome e salvar ranking
+      const name = prompt("Digite seu nome para entrar no ranking:");
+      if (name) {
+        ranking.push({ name, score });
+        updateRanking();
+      }
+    }
+
+    // Atualiza ranking ao carregar a página
+    updateRanking();
   </script>
 </body>
 </html>
