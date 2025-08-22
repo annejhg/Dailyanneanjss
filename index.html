@@ -176,6 +176,11 @@
   <div class="container">
     <h1>✨ Quiz da Anneh ✨💖</h1>
 
+    <button id="playMusic" style="display:block;margin:1rem auto;padding:10px 20px;">🔊 Tocar música de fundo</button>
+    <audio id="bgMusic" loop>
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
     <form id="quizForm">
       <!-- Perguntas 1 a 11 -->
       <div class="question">
@@ -256,12 +261,6 @@
     </div>
   </div>
 
-  <!-- Música de fundo -->
-  <audio id="bgMusic" loop autoplay>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    Seu navegador não suporta áudio.
-  </audio>
-
   <script>
     let ranking = JSON.parse(localStorage.getItem('ranking')) || [];
 
@@ -289,14 +288,17 @@
       localStorage.setItem('ranking', JSON.stringify(ranking));
     }
 
-    function playSound(url='https://www.fesliyanstudios.com/play-mp3/4385') {
-      const audio = new Audio(url);
-      audio.play();
-    }
+    const bgMusic = document.getElementById('bgMusic');
+    document.getElementById('playMusic').addEventListener('click', () => {
+      bgMusic.play();
+    });
 
-    // Som ao passar o mouse nas respostas
+    const hoverSound = new Audio('https://www.fesliyanstudios.com/play-mp3/4385');
     document.querySelectorAll('label').forEach(label => {
-      label.addEventListener('mouseenter', () => playSound());
+      label.addEventListener('mouseenter', () => {
+        hoverSound.currentTime = 0;
+        hoverSound.play();
+      });
     });
 
     function checkAnswers() {
@@ -321,7 +323,7 @@
       }
 
       document.getElementById("result").innerHTML = `Sua pontuação: ${score}/${total}<br>${message}`;
-      playSound();
+      hoverSound.play();
 
       const name = prompt("Digite seu nome para entrar no ranking glam:");
       if (name) {
@@ -335,4 +337,3 @@
   </script>
 </body>
 </html>
-
