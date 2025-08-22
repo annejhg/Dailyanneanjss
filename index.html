@@ -1,3 +1,18 @@
+Ahhh, agora entendi, mona 😅💖. O que aconteceu é que o código HTML completo ficou cortado no envio, então vou te passar tudo de uma vez, pronto pra copiar e colar no seu arquivo. Essa versão já inclui:
+
+Glitter animado ✨
+
+Som de clique nas respostas 🔊
+
+Som de envio dependendo da nota (alta/média/baixa) 🎵
+
+Música de fundo com botão de play 🎶
+
+Ranking glam 💜
+
+
+Aqui vai:
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -208,22 +223,18 @@
 document.addEventListener("DOMContentLoaded", function(){
   let ranking = JSON.parse(localStorage.getItem('ranking')) || [];
 
-  // Sons confiáveis
   const clickSound = new Audio('https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg');
   const winSound = new Audio('https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg');
   const mehSound = new Audio('https://actions.google.com/sounds/v1/cartoon/slide_whistle_to_drum_hit.ogg');
   const failSound = new Audio('https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg');
 
-  // Hover e clique nas respostas
   document.querySelectorAll('label').forEach(label => {
     label.addEventListener('click', () => { clickSound.currentTime = 0; clickSound.play(); });
   });
 
-  // Botão música de fundo
   const bgMusic = document.getElementById('bgMusic');
   document.getElementById('playMusic').addEventListener('click', ()=>{ bgMusic.play(); });
 
-  // Função checar respostas
   window.checkAnswers = function(){
     const form = document.getElementById("quizForm");
     let score = 0;
@@ -237,4 +248,52 @@ document.addEventListener("DOMContentLoaded", function(){
     let soundToPlay;
     if(percentage>=80){ message="💖 Nota alta! Você pode continuar no meu daily ✨"; soundToPlay = winSound; }
     else if(percentage>=50){ message="😏 Passou raspando! Bora viver mais comigo?"; soundToPlay = mehSound; }
-    else{ message="❌ Nota baixa! Você nem deveria estar aqui
+    else{ message="❌ Nota baixa! Você nem deveria estar aqui..."; soundToPlay = failSound; }
+
+    document.getElementById("result").innerHTML = `Sua pontuação: ${score}/${total}<br>${message}`;
+    soundToPlay.currentTime = 0; soundToPlay.play();
+
+    const name = prompt("Digite seu nome para entrar no ranking glam:");
+    if(name){ 
+      ranking.push({name, score}); 
+      updateRanking(); 
+    }
+  }
+
+  function updateRanking(){
+    ranking.sort((a,b)=>b.score-a.score);
+    const rankingList = document.getElementById("rankingList");
+    rankingList.innerHTML="";
+    ranking.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item.name} - ${item.score}/11`;
+      if(item.score>=9) li.classList.add('high-score');
+      rankingList.appendChild(li);
+    });
+    localStorage.setItem('ranking', JSON.stringify(ranking));
+  }
+
+  function createGlitter(){
+    for(let i=0;i<50;i++){
+      const glitter = document.createElement('div');
+      glitter.classList.add('glitter');
+      glitter.style.left = Math.random()*100+'vw';
+      glitter.style.animationDuration = (2+Math.random()*3)+'s';
+      glitter.style.width = glitter.style.height = (2+Math.random()*4)+'px';
+      document.body.appendChild(glitter);
+    }
+  }
+
+  createGlitter();
+  updateRanking();
+});
+  </script>
+</body>
+</html>
+
+Mona, com isso tá completo e funcional, pronto pra você abrir no navegador e já jogar seu quiz glam 💜✨.
+
+Se você quiser, posso ainda fazer uma versão ultimate com efeitos visuais no resultado, tipo fogos de glitter se a nota for alta 🎆.
+
+Quer que eu faça?
+
