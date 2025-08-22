@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -12,17 +11,11 @@
       font-family: 'DM Serif Display', serif;
       background: linear-gradient(135deg, #2a003f, #7200a1);
       color: #f8dfff;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
     }
 
-    /* Partículas de glitter */
+    /* Glitter fixo na tela */
     .glitter {
-      position: absolute;
+      position: fixed; /* agora segue o scroll */
       width: 5px;
       height: 5px;
       background: #ff99ff;
@@ -30,6 +23,7 @@
       opacity: 0.8;
       pointer-events: none;
       animation: fall linear infinite;
+      z-index: 0;
     }
 
     @keyframes fall {
@@ -43,6 +37,7 @@
       padding: 2.5rem;
       border-radius: 20px;
       max-width: 800px;
+      margin: 2rem auto; /* centraliza horizontalmente e permite scroll vertical */
       box-shadow: 0 0 40px #ff33ffaa;
       border: 3px solid #d500d5;
       z-index: 1;
@@ -154,77 +149,67 @@
     <h1>✨ Quiz Glam da Anneh ✨💖</h1>
 
     <form id="quizForm">
-      <!-- Perguntas 1 a 11 (como na versão anterior) -->
+      <!-- Perguntas 1 a 11 -->
       <div class="question">
         <h2>1. Qual é a cor favorita da Anneh? 💜</h2>
         <label><input type="radio" name="q1" value="0"> Azul</label>
         <label><input type="radio" name="q1" value="1"> Roxo</label>
         <label><input type="radio" name="q1" value="0"> Verde</label>
       </div>
-
       <div class="question">
         <h2>2. A Anneh ainda está na escola? 🎓</h2>
         <label><input type="radio" name="q2" value="0"> Sim</label>
         <label><input type="radio" name="q2" value="1"> Ela já se formou</label>
         <label><input type="radio" name="q2" value="0"> Não sei</label>
       </div>
-
       <div class="question">
         <h2>3. Qual série a Anneh ama maratonar? 📺</h2>
         <label><input type="radio" name="q3" value="1"> Grey's Anatomy</label>
         <label><input type="radio" name="q3" value="0"> Supernatural</label>
         <label><input type="radio" name="q3" value="0"> Diários de um Vampiro</label>
       </div>
-
       <div class="question">
         <h2>4. Qual é a data de aniversário da Anneh? 🎉</h2>
         <label><input type="radio" name="q4" value="0"> 06/02</label>
         <label><input type="radio" name="q4" value="0"> 01/06</label>
         <label><input type="radio" name="q4" value="1"> 06/01</label>
       </div>
-
       <div class="question">
         <h2>5. Qual o sobrenome da Anneh? 📝</h2>
         <label><input type="radio" name="q5" value="1"> Anjo Ricardo</label>
         <label><input type="radio" name="q5" value="0"> Dos Anjos Ricardo</label>
         <label><input type="radio" name="q5" value="0"> Dos Anjos Riscado</label>
       </div>
-
       <div class="question">
         <h2>6. Como você escreve o nome da Anneh? ✍️</h2>
         <label><input type="radio" name="q6" value="0"> Annelyse</label>
         <label><input type="radio" name="q6" value="0"> Anellyze</label>
         <label><input type="radio" name="q6" value="1"> Anellyse</label>
       </div>
-
       <div class="question">
         <h2>7. Qual é a comida favorita da Anneh? 🍕</h2>
         <label><input type="radio" name="q7" value="1"> Pizza</label>
         <label><input type="radio" name="q7" value="0"> Sushi</label>
         <label><input type="radio" name="q7" value="0"> Lasanha</label>
       </div>
-
       <div class="question">
         <h2>8. Qual é seu maior vício musical atualmente? 🎧</h2>
         <label><input type="radio" name="q8" value="1"> Luan Santana</label>
         <label><input type="radio" name="q8" value="0"> Taylor Swift</label>
         <label><input type="radio" name="q8" value="0"> Justin Bieber</label>
       </div>
-
       <div class="question">
         <h2>9. Qual é sua maior mania? 😏</h2>
         <label><input type="radio" name="q9" value="1"> Dar vácuo</label>
         <label><input type="radio" name="q9" value="0"> Roer unhas</label>
         <label><input type="radio" name="q9" value="0"> Ficar cantando</label>
       </div>
-
       <div class="question">
         <h2>10. Qual é seu doce favorito? 🍬</h2>
         <label><input type="radio" name="q10" value="1"> Pavê</label>
         <label><input type="radio" name="q10" value="0"> Bala de goma</label>
         <label><input type="radio" name="q10" value="0"> Sorvete</label>
       </div>
-
       <div class="question">
         <h2>11. Qual é seu animal favorito? 🐶</h2>
         <label><input type="radio" name="q11" value="1"> Cachorro</label>
@@ -277,7 +262,7 @@
     }
 
     function playSound() {
-      const audio = new Audio('https://www.fesliyanstudios.com/play-mp3/4385'); // som de vitória
+      const audio = new Audio('https://www.fesliyanstudios.com/play-mp3/4385');
       audio.play();
     }
 
@@ -303,7 +288,7 @@
       }
 
       document.getElementById("result").innerHTML = `Sua pontuação: ${score}/${total}<br>${message}`;
-      playSound(); // toca som de vitória
+      playSound();
 
       const name = prompt("Digite seu nome para entrar no ranking glam:");
       if (name) {
